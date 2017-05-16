@@ -28,6 +28,19 @@ def dijkstra(graph):
         node = find_min_cost(costs)
 
 
+# cost dict create
+def create_costs(grap):
+    costs = {}
+    for i in grap.keys():
+        costs[i] = float("inf")
+    del costs["begin"]
+
+    for k, v in grap["begin"].items():
+        costs[k] = v
+
+    return costs
+
+
 if __name__ == '__main__':
     used = []
     grap = {}
@@ -44,13 +57,11 @@ if __name__ == '__main__':
 
     grap["end"] = {}
 
-    costs = {}
-    costs['a'] = 6
-    costs['b'] = 2
-    costs["end"] = float("inf")
+    # costs create
+    costs = create_costs(grap)
 
-    parent =  {}
-    parent["a"]="begin"
+    parent = {}
+    parent["a"] = "begin"
     parent["b"] = "begin"
     parent["end"] = None
 
