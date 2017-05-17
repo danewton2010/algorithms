@@ -28,42 +28,66 @@ def dijkstra(graph):
         node = find_min_cost(costs)
 
 
-# cost dict create
-def create_costs(grap):
+# init costs and parent dict
+def init(grap):
     costs = {}
+    parent = {}
+
+    # find grap's keys and init
     for i in grap.keys():
         costs[i] = float("inf")
-    del costs["begin"]
+        parent[i] = None
 
     for k, v in grap["begin"].items():
         costs[k] = v
+        parent[k] = "begin"
 
-    return costs
+    del costs["begin"]
+
+    return costs, parent
 
 
 if __name__ == '__main__':
     used = []
+
     grap = {}
     grap["begin"] = {}
     grap["begin"]['a'] = 6
     grap["begin"]['b'] = 2
-
     grap["a"] = {}
     grap["a"]["end"] = 1
-
     grap["b"] = {}
     grap["b"]["a"] = 3
     grap["b"]["end"] = 5
-
     grap["end"] = {}
 
-    # costs create
-    costs = create_costs(grap)
-
-    parent = {}
-    parent["a"] = "begin"
-    parent["b"] = "begin"
-    parent["end"] = None
+    costs, parent = init(grap)
 
     dijkstra(grap)
     print(costs)
+    print(parent)
+
+    seq=["end"]
+    node = parent["end"]
+    while node:
+       seq.append(node)
+       node = parent[node]
+    seq.reverse()
+    print(' -> '.join(seq))
+
+
+
+
+
+'''
+             a    
+           / | \
+         6/  |  1
+         /   |   \
+    begin    3    end
+         \   |   /   
+          2  |  5
+           \ | /
+             b
+
+'''
